@@ -76,7 +76,7 @@ elif [ "$ACTION" == "update-all" ]; then
     # TODO: We only get up to 100 results here ... we might want to
     #       implement pagination properly at some point :-)
     REPOS=$(ghe_api "search/repositories?q=org%3A$OSS_FORK_ORG+$TARGET_REPO_NAME&type=Repositories&per_page=100" |
-        perl -nE 'say /"name":\s*"([^"]+)/'
+        perl -nE 'say /"name":\s*"([^"]+)/' | grep "$TARGET_REPO_NAME" | sort
     )
     for REPO in $REPOS; do
         ${0} --update $REPO
